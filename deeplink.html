@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <meta name="apple-itunes-app" content="app-id=1119303492, app-argument=lync://confjoin?url=https://meet.rtc.yourcorporatedomain.com/firstName.lastName/conferenceID">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Starting App...</title>
+<script>
+
+//var URL = "kaonkaon://product.html#malvern;6";
+var URL = "unitydl://mylink?parameter";
+//cgi-parking/id1119303492
+//var MARKET = "itms-apps://details?id=com.cgi.cz.cgiParking";  
+//https://apps.apple.com/cz/app/cgi-parking/id1119303492
+var MARKET = "https://apps.apple.com/cz/developer/cgi-it-czech-republic-s-r-o/id925257258";
+//var MARKET = "https://apps.apple.com/cz/app/cgi-parking/id1119303492";
+//var MARKET = "itms-apps://details?id=com.cgi.cz.nnfar";  
+  
+//var ITUNES = "itms://itunes.apple.com/us/app/kaon-interactive-3d-product/id525051513?mt=8&uo=4";
+//var QR = "http://goo.gl/gz07g"; // this should be a shortened link back to this page
+  
+var custom = "unitydl://mylink?parameter";
+var alt = "https://www.cgi.com/en";
+var g_intent = "intent://scan/#Intent;scheme=unitydl://mylink?parameter;package=com.cgi.nnfar;end";
+var timer;
+var heartbeat;
+var iframe_timer;  
+  
+function clearTimers() {
+  clearTimeout(timer);
+  clearTimeout(heartbeat);
+  clearTimeout(iframe_timer);
+}  
+  
+function intervalHeartbeat() {
+    if (document.webkitHidden || document.hidden) {
+        clearTimers();
+    }
+}
+  
+  function tryIframeApproach() {
+    var iframe = document.createElement("iframe");
+    iframe.style.border = "none";
+    iframe.style.width = "1px";
+    iframe.style.height = "1px";
+    iframe.onload = function () {
+        document.location = alt;
+    };
+    iframe.src = custom;
+    document.body.appendChild(iframe);
+  }
+
+  function tryWebkitApproach() {
+    document.location = custom;
+    timer = setTimeout(function () {
+        document.location = alt;
+    }, 2500);
+  }
+
+  function useIntent() {
+    document.location = g_intent;
+  }
+
+  function launch_app_or_alt_url() {
+      heartbeat = setInterval(intervalHeartbeat, 200);
+      if (navigator.userAgent.match(/Chrome/)) {
+          useIntent();
+      } else if (navigator.userAgent.match(/Firefox/)) {
+          tryWebkitApproach();
+          iframe_timer = setTimeout(function () {
+              tryIframeApproach();
+          }, 1500);
+      } else {
+          tryIframeApproach();
+      }
+  }
+
+  /*$(".source_url").click(function (event) {
+      launch_app_or_alt_url($(this));
+      event.preventDefault();
+  });*/
+  
+  
+function onLoad() {
+
+    if (navigator.userAgent.match(/Android/)) {
+        launch_app_or_alt_url();
+     } else if (navigator.userAgent.match(/iPhone|iPad|iPod/)) {
+
+         // IOS
+         setTimeout(function() {
+             if (!document.webkitHidden)
+                 window.location = MARKET;
+         }, 100);
+
+         window.location = URL;
+
+     } else {
+
+         // Not mobile
+         //var img = document.createElement("img");
+         //img.src = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl="+encodeURIComponent(QR);
+         //document.body.appendChild(img);
+         window.location = alt;
+     }
+}
+</script>
+  </head>
+  <body>
+    <button onclick="onLoad()">Click me</button>
+  </body>
+</html>
